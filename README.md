@@ -36,8 +36,8 @@ The backend API for PhotoPrint. Handles login, license verification, and photo p
 
 **1. Clone this repo**
 ```bash
-git clone https://github.com/YOUR_USERNAME/photoprint-backend.git
-cd photoprint-backend
+git clone https://github.com/balramshukla003/photo-saas-backend
+cd photo-saas-backend
 ```
 
 **2. Install all packages** (one command)
@@ -107,107 +107,6 @@ Return as base64 PNG to frontend
 ```
 
 ---
-
-
-# PhotoPrint — Database
-
-![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white&style=flat-square)
-![MariaDB](https://img.shields.io/badge/MariaDB-compatible-003545?logo=mariadb&logoColor=white&style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-
-The database schema for PhotoPrint. Contains two tables — one for users, one for licenses — along with a ready-to-run seed file that creates the first admin account.
-
----
-
-## What's in this repo
-
-| File | What it does |
-|---|---|
-| `schema.sql` | Creates the database, both tables, and inserts the default admin user |
-
----
-
-## Before you start
-
-| What | Where to get it |
-|---|---|
-| MySQL 8 or MariaDB | https://dev.mysql.com/downloads/installer |
-
----
-
-## Setup
-
-**1. Clone this repo**
-```bash
-git clone https://github.com/YOUR_USERNAME/photoprint-database.git
-cd photoprint-database
-```
-
-**2. Run the schema file**
-```bash
-mysql -u root -p < schema.sql
-```
-
-That's it. The database is ready.
-
----
-
-## What gets created
-
-**`users` table** — stores shop owner accounts
-
-| Column | What it stores |
-|---|---|
-| id | Unique ID for each user |
-| email | Login email address |
-| password_hash | Password stored as a BCrypt hash — never plain text |
-| full_name | Display name |
-| is_active | 1 means active, 0 means disabled |
-| created_at | When the account was created |
-| updated_at | When the account was last changed |
-
-**`licenses` table** — controls who can access the app and until when
-
-| Column | What it stores |
-|---|---|
-| id | Unique ID for each license |
-| user_id | Which user this license belongs to |
-| license_key | Unique key e.g. PP-STA-2024-F3A1C2D4 |
-| is_active | 1 means active, 0 means revoked |
-| plan | standard or premium |
-| issued_at | When the license was created |
-| expires_at | When the license stops working |
-
----
-
-## Default login after setup
-
-```
-Email    : admin@photoprint.com
-Password : Admin@123
-License  : Active — expires 1 year from the date schema.sql was run
-```
-
----
-
-## Adding new users
-
-Use the scripts in the [photoprint-user-tools](../photoprint-user-tools) repo to add new users with properly hashed passwords. Do not insert passwords manually — they must be BCrypt hashed first.
-
----
-
-## Renewing an expired license
-
-Run this in MySQL:
-```sql
-UPDATE licenses
-SET expires_at = DATE_ADD(NOW(), INTERVAL 1 YEAR),
-    is_active = 1
-WHERE user_id = (SELECT id FROM users WHERE email = 'user@email.com');
-```
-
----
-
 
 ## Related repos
 
