@@ -113,5 +113,4 @@ Return as base64 PNG to frontend
 | Repo | Purpose |
 |---|---|
 | [photoprint-frontend](photo-saas-frontend) | React frontend |
-| [photoprint-database](photo-saas-database) | MySQL schema and seed data |
 | [photoprint-user-tools](photo-saas-python) | Scripts to add users and reset passwords |
